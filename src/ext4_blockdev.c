@@ -68,6 +68,7 @@ static void ext4_bdif_unlock(struct ext4_blockdev *bdev)
 static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 			   uint64_t blk_id, uint32_t blk_cnt)
 {
+	printf("[BLKREAD] LBA : %llu || blocks : %zu\n", (unsigned long long) blk_id, blk_cnt);
 	ext4_bdif_lock(bdev);
 	int r = bdev->bdif->bread(bdev, buf, blk_id, blk_cnt);
 	bdev->bdif->bread_ctr++;
@@ -78,6 +79,7 @@ static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 static int ext4_bdif_bwrite(struct ext4_blockdev *bdev, const void *buf,
 			    uint64_t blk_id, uint32_t blk_cnt)
 {
+	printf("[BLKWRITE] LBA : %llu || blocks : %zu\n", (unsigned long long) blk_id, blk_cnt);
 	ext4_bdif_lock(bdev);
 	int r = bdev->bdif->bwrite(bdev, buf, blk_id, blk_cnt);
 	bdev->bdif->bwrite_ctr++;

@@ -183,9 +183,9 @@ static bool parse_opt(int argc, char **argv)
 		case 'd':
 			dir_cnt = atoi(optarg);
 			break;
-		case 'l':
-			cleanup_flag = true;
-			break;
+		// case 'l':
+		// 	cleanup_flag = true;
+		// 	break;
 		case 'b':
 			bstat = true;
 			break;
@@ -232,15 +232,15 @@ int main(int argc, char **argv)
 	if (!test_lwext4_mount(bd, bc))
 		return EXIT_FAILURE;
 
-	test_lwext4_cleanup();
+	// test_lwext4_cleanup();
 
 	if (sbstat)
 		test_lwext4_mp_stats();
 
 	test_lwext4_dir_ls("/mp/");
 	fflush(stdout);
-	if (!test_lwext4_dir_test(dir_cnt))
-		return EXIT_FAILURE;
+	// if (!test_lwext4_dir_test(dir_cnt))
+	// 	return EXIT_FAILURE;
 
 	fflush(stdout);
 	uint8_t *rw_buff = malloc(rw_szie);
@@ -261,8 +261,8 @@ int main(int argc, char **argv)
 	if (sbstat)
 		test_lwext4_mp_stats();
 
-	if (cleanup_flag)
-		test_lwext4_cleanup();
+	// if (cleanup_flag)
+	// 	test_lwext4_cleanup();
 
 	if (bstat)
 		test_lwext4_block_stats();

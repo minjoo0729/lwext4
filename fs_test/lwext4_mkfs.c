@@ -55,8 +55,8 @@ static int fs_type = F_SET_EXT4;
 
 static struct ext4_fs fs;
 static struct ext4_mkfs_info info = {
-	.block_size = 1024,
-	.journal = true,
+	.block_size = 4096,
+	.journal = false,
 };
 
 static bool verbose = false;
