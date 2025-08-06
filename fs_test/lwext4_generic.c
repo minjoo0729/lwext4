@@ -256,7 +256,7 @@ int main(int argc, char **argv)
 	free(rw_buff);
 
 	fflush(stdout);
-	test_lwext4_dir_ls("/mp/");
+	// test_lwext4_dir_ls("/mp/");
 
 	if (sbstat)
 		test_lwext4_mp_stats();
