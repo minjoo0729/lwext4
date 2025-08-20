@@ -237,7 +237,7 @@ int main(int argc, char **argv)
 	if (sbstat)
 		test_lwext4_mp_stats();
 
-	test_lwext4_dir_ls("/mp/");
+	// test_lwext4_dir_ls("/mp/");
 	fflush(stdout);
 	// if (!test_lwext4_dir_test(dir_cnt))
 	// 	return EXIT_FAILURE;

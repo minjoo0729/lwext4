@@ -208,9 +208,9 @@ bool test_lwext4_file_test(uint8_t *rw_buff, uint32_t rw_size, uint32_t rw_count
 	printf("  rw count: %" PRIu32 "\n", rw_count);
 
 	/*Add hello world file.*/
-	r = ext4_fopen(&f, "/mp/hello.txt", "wb");
-	r = ext4_fwrite(&f, "Hello World !\n", strlen("Hello World !\n"), 0);
-	r = ext4_fclose(&f);
+	// r = ext4_fopen(&f, "/mp/hello.txt", "wb");
+	// r = ext4_fwrite(&f, "Hello World !\n", strlen("Hello World !\n"), 0);
+	// r = ext4_fclose(&f);
 
 	io_timings_clear();
 	start = get_ms();
@@ -254,19 +254,8 @@ bool test_lwext4_file_test(uint8_t *rw_buff, uint32_t rw_size, uint32_t rw_count
 		printf("ext4_fopen ERROR = %d\n", r);
 		return false;
 	}
-	ext4_fseek(&f, 0, SEEK_SET);             /* 파일 처음으로 이동 */
 
-	for (i = 0; i < rw_count; ++i) {
-
-		memset(rw_buff, i % 10 + '0', rw_size);   /* ← ② 패턴 맞추기 */
-		
-		r = ext4_fwrite(&f, rw_buff, rw_size, &size);
-		
-		if (r != EOK || size != rw_size)
-			break;
-	}
-
-	ext4_fseek(&f, 0, SEEK_SET);     /* ← ① 읽기 전에 위치 리셋 */
+	printf("ext4_read: %" PRIu32 " * %" PRIu32 " ...\n", rw_size, rw_count);
 
 	for (i = 0; i < rw_count; ++i) {
 		r = ext4_fread(&f, rw_buff, rw_size, &size);
