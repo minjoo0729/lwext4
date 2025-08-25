@@ -129,7 +129,7 @@ static void ext4_bdif_unlock(struct ext4_blockdev *bdev)
 static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 			   uint64_t blk_id, uint32_t blk_cnt)
 {
-	bool is_journaling_on = true; 
+	bool is_journaling_on = false; 
 	printf("[BLKREAD] %s (LBA: #%llu) || blocks : %zu\n", 
 		lba_to_block_name(blk_id, is_journaling_on), 
        (unsigned long long) blk_id, 
@@ -144,7 +144,7 @@ static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 static int ext4_bdif_bwrite(struct ext4_blockdev *bdev, const void *buf,
 			    uint64_t blk_id, uint32_t blk_cnt)
 {
-	bool is_journaling_on = true; 
+	bool is_journaling_on = false; 
 	printf("[BLKWRITE] %s (LBA: #%llu) || blocks : %zu\n", 
 		lba_to_block_name(blk_id, is_journaling_on), 
        (unsigned long long) blk_id, 
