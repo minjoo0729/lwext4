@@ -248,10 +248,41 @@ int main(int argc, char **argv)
 		free(rw_buff);
 		return EXIT_FAILURE;
 	}
+	// TASK 1-i and TASK 1-ii
 	if (!test_lwext4_file_test(rw_buff, rw_szie, rw_count)) {
 		free(rw_buff);
 		return EXIT_FAILURE;
 	}
+
+	// TASK 1-iii-1
+	// if (!test_lwext4_create_single_file("/mp/single")) {
+	// 	free(rw_buff);
+	// 	return EXIT_FAILURE;
+	// }
+
+	// TASK 1-iii-2
+	// if (!test_lwext4_dir_test(dir_cnt)) {
+	// 	free(rw_buff);
+	// 	return EXIT_FAILURE;
+	// }
+
+	// TASK 1-iii-3
+	// if (!test_lwext4_create_single_dir("/mp/new_single_dir")) {
+    //     free(rw_buff);
+    //     return EXIT_FAILURE;
+    // }
+
+	// TASK 1-iv-1
+	// if (!test_lwext4_delete_single_file("/mp/file_to_delete.txt")) {
+    //     free(rw_buff);
+    //     return EXIT_FAILURE;
+    // }
+
+	// TASK 1-iv-2
+	// if (!test_lwext4_delete_multi_files("/mp/test_dir", dir_cnt)) {
+    //     free(rw_buff);
+    //     return EXIT_FAILURE;
+    // }
 
 	free(rw_buff);
 

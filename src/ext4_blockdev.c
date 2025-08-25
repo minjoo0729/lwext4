@@ -46,6 +46,67 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+/**
+ * @brief Converts a Logical Block Address (LBA) to a detailed, formatted block name string.
+ * @param lba The LBA (blk_id) to identify.
+ * @param is_journal_enabled Set to true if journaling is on, false otherwise.
+ * @return A formatted string like "Block Name (Block #123)".
+ */
+const char* lba_to_block_name(unsigned long long lba, bool is_journal_enabled) {
+    // 반환할 문자열을 저장하기 위한 정적 버퍼
+    static char buffer[128];
+    // LBA를 블록 번호로 변환 (4096 byte 블록 크기 기준, 1 block = 8 LBA)
+    unsigned long long block_num = lba / 8;
+
+    // --- 공통 메타데이터 영역 ---
+    if (lba == 2) {
+        sprintf(buffer, "Block (#%llu) : Superblock (Primary)", block_num);
+        return buffer;
+    }
+    if (block_num == 1) {
+        sprintf(buffer, "Block (#%llu) : Group Descriptors (Primary)", block_num);
+        return buffer;
+    }
+    if (block_num == 3) {
+        sprintf(buffer, "Block (#%llu) : Block Bitmap (BG0)", block_num);
+        return buffer;
+    }
+    if (block_num == 4) {
+        sprintf(buffer, "Block (#%llu) : Inode Bitmap (BG0)", block_num);
+        return buffer;
+    }
+    if (block_num >= 5 && block_num <= 516) {
+        sprintf(buffer, "Block (#%llu) : Inode Table (BG0)", block_num);
+        return buffer;
+    }
+
+    // --- Journaling 활성화 여부에 따른 영역 구분 ---
+    if (is_journal_enabled) {
+        // Journal Area: dumpe2fs 결과 (블록 #521 ~ #4621) 기반
+        if (lba >= 4168 && lba <= 36975) {
+            sprintf(buffer, "Block (#%llu) : Journal Area", block_num);
+            return buffer;
+        }
+        // 저널링 ON 상태의 데이터 블록
+        if (block_num >= 4622) {
+            sprintf(buffer, "Block (#%llu) : Data Block", block_num);
+            return buffer;
+        }
+    } else { // Journaling 비활성화
+        // 저널링 OFF 상태의 데이터 블록
+        if (block_num >= 521) {
+            sprintf(buffer, "Block (#%llu) : Data Block", block_num);
+            return buffer;
+        }
+    }
+
+    // 위에 해당하지 않는 모든 블록
+    sprintf(buffer, "Block (#%llu) : Data/Unknown Block", block_num);
+    return buffer;
+}
 
 static void ext4_bdif_lock(struct ext4_blockdev *bdev)
 {
@@ -68,7 +129,11 @@ static void ext4_bdif_unlock(struct ext4_blockdev *bdev)
 static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 			   uint64_t blk_id, uint32_t blk_cnt)
 {
-	printf("[BLKREAD] LBA : %llu || blocks : %zu\n", (unsigned long long) blk_id, blk_cnt);
+	bool is_journaling_on = true; 
+	printf("[BLKREAD] %s (LBA: #%llu) || blocks : %zu\n", 
+		lba_to_block_name(blk_id, is_journaling_on), 
+       (unsigned long long) blk_id, 
+       blk_cnt);	
 	ext4_bdif_lock(bdev);
 	int r = bdev->bdif->bread(bdev, buf, blk_id, blk_cnt);
 	bdev->bdif->bread_ctr++;
@@ -79,7 +144,11 @@ static int ext4_bdif_bread(struct ext4_blockdev *bdev, void *buf,
 static int ext4_bdif_bwrite(struct ext4_blockdev *bdev, const void *buf,
 			    uint64_t blk_id, uint32_t blk_cnt)
 {
-	printf("[BLKWRITE] LBA : %llu || blocks : %zu\n", (unsigned long long) blk_id, blk_cnt);
+	bool is_journaling_on = true; 
+	printf("[BLKWRITE] %s (LBA: #%llu) || blocks : %zu\n", 
+		lba_to_block_name(blk_id, is_journaling_on), 
+       (unsigned long long) blk_id, 
+       blk_cnt);
 	ext4_bdif_lock(bdev);
 	int r = bdev->bdif->bwrite(bdev, buf, blk_id, blk_cnt);
 	bdev->bdif->bwrite_ctr++;

@@ -43,6 +43,14 @@ void test_lwext4_cleanup(void);
 bool test_lwext4_mount(struct ext4_blockdev *bdev, struct ext4_bcache *bcache);
 bool test_lwext4_umount(void);
 
+// TASK 1-iii
+// bool test_lwext4_create_single_file(const char *path);
+// bool test_lwext4_create_single_dir(const char *path);
+
+// TASK 1-iv
+// bool test_lwext4_delete_single_file(const char *path);
+// bool test_lwext4_delete_multi_files(const char *base_path, int count);
+
 void tim_wait_ms(uint32_t v);
 
 uint32_t tim_get_ms(void);
