@@ -255,7 +255,7 @@ bool test_lwext4_file_test(uint8_t *rw_buff, uint32_t rw_size, uint32_t rw_count
 		return false;
 	}
 
-	// printf("ext4_read: %" PRIu32 " * %" PRIu32 " ...\n", rw_size, rw_count);
+	printf("ext4_read: %" PRIu32 " * %" PRIu32 " ...\n", rw_size, rw_count);
 
 	for (i = 0; i < rw_count; ++i) {
 		r = ext4_fread(&f, rw_buff, rw_size, &size);
