@@ -27,6 +27,8 @@ ext4_write: 65536 * 1 ...
 [BLKWRITE] Block (#521) : Data Block (LBA: #4168) || blocks : 120
   write time: 0 ms
   write speed: 64000 KB/s
+[BLKWRITE] Block (#2) : Data/Unknown Block (LBA: #16) || blocks : 8
+[BLKWRITE] Block (#521) : Data Block (LBA: #4168) || blocks : 120
 [BLKREAD] Block (#2) : Data/Unknown Block (LBA: #16) || blocks : 8
 [BLKREAD] Block (#521) : Data Block (LBA: #4168) || blocks : 120
   read time: 0 ms
