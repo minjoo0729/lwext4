@@ -1,0 +1,42 @@
+ext4_generic
+test conditions:
+	imput name: task1_append_65536.ext4
+	rw size: 65536
+	rw count: 1
+[BLKREAD] Block (#0) : Superblock (Primary) (LBA: #2) || blocks : 2
+ext4_fs: l: 219   [info]  sblock features_incompatible:
+ext4_fs: l: 144   filetype
+ext4_fs: l: 152   extents
+ext4_fs: l: 222   [info]  sblock features_compatible:
+ext4_fs: l: 183   dir_index
+ext4_fs: l: 225   [info]  sblock features_read_only:
+ext4_fs: l: 189   sparse_super
+ext4_fs: l: 191   large_file
+[BLKWRITE] Block (#0) : Superblock (Primary) (LBA: #2) || blocks : 2
+file_test:
+  rw size: 65536
+  rw count: 1
+[BLKREAD] Block (#1) : Group Descriptors (Primary) (LBA: #8) || blocks : 8
+[BLKREAD] Block (#5) : Inode Table (BG0) (LBA: #40) || blocks : 8
+[BLKREAD] Block (#517) : Data/Unknown Block (LBA: #4136) || blocks : 8
+[BLKREAD] Block (#518) : Data/Unknown Block (LBA: #4144) || blocks : 8
+[BLKREAD] Block (#4) : Inode Bitmap (BG0) (LBA: #32) || blocks : 8
+ext4_write: 65536 * 1 ...
+[BLKREAD] Block (#3) : Block Bitmap (BG0) (LBA: #24) || blocks : 8
+[BLKWRITE] Block (#2) : Data/Unknown Block (LBA: #16) || blocks : 8
+[BLKWRITE] Block (#521) : Journal Area (LBA: #4168) || blocks : 120
+  write time: 0 ms
+  write speed: 64000 KB/s
+ext4_read: 65536 * 1 ...
+[BLKREAD] Block (#2) : Data/Unknown Block (LBA: #16) || blocks : 8
+[BLKREAD] Block (#521) : Journal Area (LBA: #4168) || blocks : 120
+  read time: 0 ms
+  read speed: 64000 KB/s
+[BLKWRITE] Block (#5) : Inode Table (BG0) (LBA: #40) || blocks : 8
+[BLKWRITE] Block (#1) : Group Descriptors (Primary) (LBA: #8) || blocks : 8
+[BLKWRITE] Block (#518) : Data/Unknown Block (LBA: #4144) || blocks : 8
+[BLKWRITE] Block (#3) : Block Bitmap (BG0) (LBA: #24) || blocks : 8
+[BLKWRITE] Block (#4) : Inode Bitmap (BG0) (LBA: #32) || blocks : 8
+[BLKWRITE] Block (#0) : Superblock (Primary) (LBA: #2) || blocks : 2
+
+test finished

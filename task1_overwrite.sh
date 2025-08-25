@@ -7,15 +7,15 @@ set -e
 cd ~/lwext4 || { echo "~/lwext4 디렉터리에서 실행하세요"; exit 1; }
 
 sizes=(1024 4096 16384 65536 1048576)   # 1K 4K 16K 64K 1M
-mkdir -p results_overwrite
-rm -f overwrite_*.ext4 results_overwrite/*
+rm ./results_task1_overwrite/*
+rm ./task1_overwrite_*
 
 for sz in "${sizes[@]}"; do
-    img="overwrite_${sz}.ext4"
+    img="task1_overwrite_${sz}.ext4"
     cp img_ori.ext4 "$img"                                  
 
     ./build_generic/fs_test/lwext4-generic \
-        -i "$img" -s "$sz" -c 1 -d 0 | tee "results_overwrite/overwrite_${sz}.log"
+        -i "$img" -s "$sz" -c 1 -d 0 | tee "results_task1_overwrite/task1_overwrite_${sz}.log"
 
-    echo "✔ ${sz}B overwrite → results_overwrite/overwrite_${sz}.log"
+    echo "✔ ${sz}B overwrite → results_task1_overwrite/task1_overwrite_${sz}.log"
 done
